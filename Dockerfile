@@ -8,10 +8,13 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Install the dependencies
-RUN npm install
+RUN npm install --only=production
 
 # Copy the rest of the application code
 COPY . .
+
+# Copy .env file
+COPY .env .env
 
 # Generate Prisma client
 RUN npx prisma generate
@@ -20,7 +23,7 @@ RUN npx prisma generate
 RUN npm run build
 
 # Expose the port that the application will run on
-EXPOSE 4000
+EXPOSE 8080
 
 # Start the application
 CMD ["npm", "start"]
