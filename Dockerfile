@@ -7,14 +7,14 @@ WORKDIR /usr/src/app
 # Copy the package.json and package-lock.json files
 COPY package*.json ./
 
-# Install the dependencies
-RUN npm install --only=production
+# Install the dependencies including development dependencies
+RUN npm install
+
+# Install TypeScript globally
+RUN npm install -g typescript
 
 # Copy the rest of the application code
 COPY . .
-
-# Copy .env file
-COPY .env .env
 
 # Generate Prisma client
 RUN npx prisma generate
